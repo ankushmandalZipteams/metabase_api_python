@@ -141,18 +141,13 @@ class Metabase_API():
             if not collection_id:
                 if not collection_name:
                     # Collection name/id is not provided. Searching in all collections 
-                    item_IDs = [ i['id'] for i in self.get("/api/{}/".format(item_type)) if i['name'] == item_name 
-                                                                                        and i['archived'] == False ]
+                    item_IDs = [ i['id'] for i in self.get("/api/{}/".format(item_type)) if i['name'] == item_name  and i['archived'] == False ]
                 else:
                     collection_id = self.get_item_id('collection', collection_name) if collection_name != 'root' else None
-                    item_IDs = [ i['id'] for i in self.get("/api/{}/".format(item_type)) if i['name'] == item_name 
-                                                                                        and i['collection_id'] == collection_id 
-                                                                                        and i['archived'] == False ]
+                    item_IDs = [ i['id'] for i in self.get("/api/{}/".format(item_type)) if i['name'] == item_name  and i['collection_id'] == collection_id and i['archived'] == False ]
             else:
                 collection_name = self.get_item_name('collection', collection_id)
-                item_IDs = [ i['id'] for i in self.get("/api/{}/".format(item_type)) if i['name'] == item_name 
-                                                                                    and i['collection_id'] == collection_id 
-                                                                                    and i['archived'] == False ]
+                item_IDs = [ i['id'] for i in self.get("/api/{}/".format(item_type)) if i['name'] == item_name  and i['collection_id'] == collection_id and i['archived'] == False ]
 
             if len(item_IDs) > 1:
                 if not collection_name:
