@@ -4,7 +4,7 @@ import getpass
 class Metabase_API():
 
     def __init__(self, domain, email, password=None, basic_auth=False, is_admin=True):
-
+# we are adding domain, email and password to get authentication. 
         self.domain = domain.rstrip('/')
         self.email = email
         self.password = getpass.getpass(prompt='Please enter your password: ') if password is None else password
@@ -18,7 +18,7 @@ class Metabase_API():
                 Ask your Metabase admin to disable "Friendly Table and Field Names" (in Admin Panel > Settings > General).
                 Without this some of the functions of the current package may not work as expected.
             ''')
-
+# add authentication for login
 
     def authenticate(self):
         """Get a Session ID"""
@@ -33,7 +33,7 @@ class Metabase_API():
 
         self.session_id = res.json()['id']
         self.header = {'X-Metabase-Session':self.session_id}
-
+# The Validate_session will connect to the data and provide session ID.
 
     def validate_session(self):
         """Get a new session ID if the previous one has expired"""
@@ -60,8 +60,8 @@ class Metabase_API():
         else:
             return res.json() if res.ok else False
 
-
-    def post(self, endpoint, *args, **kwargs):
+# We use post function to add the card or dashboard to the metabase
+    def post(self, endpoint, *args, **kwargs): #Used to add card in args
         self.validate_session()
         res = requests.post(self.domain + endpoint, headers=self.header, **kwargs, auth=self.auth)
         if 'raw' in args:
